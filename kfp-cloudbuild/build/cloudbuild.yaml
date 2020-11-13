@@ -4,6 +4,7 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone',
          '${_REPO_URL}', '.',
+         '-b', '${_BRANCH}',
          '--depth', '1',
          '--verbose']
   id: 'Clone Repo'
@@ -51,7 +52,7 @@ steps:
 
 # Upload compiled pipeline to GCS
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'pipeline.tar.gz', 'settings.yaml', 'gs://${_GCS_LOCATION}/${_TAG}/']
+  args: ['cp', 'pipeline.tar.gz', 'settings.yaml', 'gs://artifacts.${_PROJECT_ID}.appspot.com/${_TAG}/']
   dir: 'kfp-cloudbuild/pipeline'
   id:   'Upload Pipeline to GCS'
 
